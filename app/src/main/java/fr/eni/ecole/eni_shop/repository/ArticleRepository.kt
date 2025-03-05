@@ -7,11 +7,11 @@ import fr.eni.ecole.eni_shop.dao.DaoType
 object ArticleRepository {
     val articleDao = DaoFactory.createArticleDao(DaoType.MEMORY)
 
-    fun getArticle(id: Long): Article? {
+    fun getArticle(id: Long): Article {
         return articleDao.findById(id)
     }
 
-    fun addArticle (article: Article): Article? {
+    fun addArticle (article: Article): Article {
        return articleDao.insert(article)
     }
 }
