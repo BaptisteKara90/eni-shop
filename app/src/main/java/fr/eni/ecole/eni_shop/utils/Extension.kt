@@ -1,11 +1,9 @@
-package fr.eni.ecole.eni_shop.utils
+package fr.eni.ecole.enishop.utils
 
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
-fun Date.toFrenchFormat() : String{
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE)
-    return dateFormat.format(this)
-
+fun Date.toFrenchStringFormat(): String {
+    val formatter = SimpleDateFormat("dd/MM/yyyy")
+    return formatter.format(this)
 }
