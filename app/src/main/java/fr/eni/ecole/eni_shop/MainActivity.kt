@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import fr.eni.ecole.eni_shop.ui.screen.ArticleFormScreen
+import fr.eni.ecole.eni_shop.ui.screen.ArticlesScreen
 import fr.eni.ecole.eni_shop.ui.theme.EnishopTheme
 
 
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EnishopTheme{
-                ArticleFormScreen()
+                ArticlesScreen()
             }
         }
     }
