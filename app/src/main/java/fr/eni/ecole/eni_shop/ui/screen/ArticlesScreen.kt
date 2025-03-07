@@ -28,6 +28,14 @@ fun ArticlesScreen(
     val categories by viewModel.categories.collectAsState()
     var selectedCategory by rememberSaveable { mutableStateOf<String>("") }
 
+    val selectedArticles = if(selectedCategory != ""){
+        articles.filter {
+            it.category == selectedCategory
+    }
+    }else{
+        articles
+    }
+
     Scaffold(
         topBar = { EniShopTopBar() }
     ) {
