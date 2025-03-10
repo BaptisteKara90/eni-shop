@@ -43,7 +43,7 @@ fun ArticlesScreen(
             CategoryFilterChip(categories, selectedCategory = selectedCategory, onCategoryChange = {
                 selectedCategory = it
             })
-            ArticleList(articles = articles)
+            ArticleList(articles = selectedArticles)
         }
     }
 }
