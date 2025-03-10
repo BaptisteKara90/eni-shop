@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import fr.eni.ecole.eni_shop.ui.screen.ArticleFormScreen
-import fr.eni.ecole.eni_shop.ui.screen.ArticlesScreen
+import androidx.compose.ui.Modifier
 import fr.eni.ecole.eni_shop.ui.theme.EnishopTheme
-
+import fr.eni.ecole.enishop.ui.screen.ArticleDetailScreen
 
 
 private const val TAG = "MainActivity"
@@ -18,7 +17,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EnishopTheme{
-                ArticlesScreen()
+                ArticleDetailScreen(modifier = Modifier, id = 1)
             }
         }
     }
