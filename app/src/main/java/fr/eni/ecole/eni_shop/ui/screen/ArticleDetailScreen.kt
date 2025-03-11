@@ -9,7 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -26,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.vm.ArticleDetailViewModel
@@ -38,7 +45,8 @@ fun ArticleDetailScreen(
     id: Long,
     viewModel: ArticleDetailViewModel = viewModel(
         factory = ArticleDetailViewModel.Factory
-    )
+    ),
+    navController: NavHostController
 ) {
     val article by viewModel.article.collectAsState()
 
@@ -47,7 +55,7 @@ fun ArticleDetailScreen(
     }
 
     Scaffold(
-        topBar = { EniShopTopBar() }
+        topBar = { EniShopTopBar(navController = navController) }
     ) {
         Column(modifier = Modifier.padding(it)) {
             ArticleDetail(article = article)

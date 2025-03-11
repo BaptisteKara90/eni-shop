@@ -25,11 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import fr.eni.ecole.enishop.ui.common.EniShopTextField
 import fr.eni.ecole.enishop.ui.common.EniShopTopBar
 
 @Composable
-fun ArticleFormScreen(modifier: Modifier = Modifier) {
+fun ArticleFormScreen(modifier: Modifier = Modifier, navController: NavHostController) {
 
     var expanded by rememberSaveable {
         mutableStateOf(false)
@@ -50,7 +51,7 @@ fun ArticleFormScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { EniShopTopBar() }
+        topBar = { EniShopTopBar(navController = navController) }
     ) {
         Column(
             modifier = Modifier
@@ -146,9 +147,3 @@ fun CategoriesDropDowmMenu(
 
 }
 
-
-@Preview
-@Composable
-fun Preview2() {
-    ArticleFormScreen()
-}

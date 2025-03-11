@@ -3,6 +3,7 @@ package fr.eni.ecole.enishop.ui.common
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,12 +20,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
@@ -51,8 +57,16 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EniShopTopBar(modifier: Modifier = Modifier) {
-    TopAppBar(title = { EniShopTopBarTitle() })
+fun EniShopTopBar(modifier: Modifier = Modifier, navController: NavHostController) {
+    TopAppBar(title = { EniShopTopBarTitle() },
+        navigationIcon = {
+            if (navController.previousBackStackEntry != null) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                }
+            }
+        }
+    )
 }
 
 @Composable
@@ -141,22 +155,22 @@ fun CategoryFilterChip( categories : List<String>, selectedCategory: String = ""
 }
 
 @Composable
-fun ArticleList(articles: List<Article>) {
+fun ArticleList(articles: List<Article>, onClickToDetail: (Long) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(articles){
-            ArticleItem(article = it)
+            ArticleItem(article = it, onClickToDetail = onClickToDetail)
         }
     }
 }
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun ArticleItem(article: Article, modifier: Modifier = Modifier) {
-    Card {
+fun ArticleItem(article: Article, modifier: Modifier = Modifier, onClickToDetail: (Long) -> Unit) {
+    Card(modifier = Modifier.clickable { onClickToDetail(article.id) }) {
         Column (modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             AsyncImage(
                 model = article.urlImage,
