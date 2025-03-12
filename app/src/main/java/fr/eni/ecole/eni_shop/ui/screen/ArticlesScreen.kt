@@ -23,6 +23,7 @@ import fr.eni.ecole.eni_shop.vm.ArticleListViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import fr.eni.ecole.eni_shop.navigation.ArticleAddDestination
+import fr.eni.ecole.eni_shop.vm.SettingsViewModel
 import fr.eni.ecole.enishop.ui.common.ArticleList
 import fr.eni.ecole.enishop.ui.common.CategoryFilterChip
 import fr.eni.ecole.enishop.ui.common.EniShopTopBar
@@ -33,7 +34,8 @@ fun ArticlesScreen(
     modifier: Modifier = Modifier,
     viewModel: ArticleListViewModel = viewModel(factory = ArticleListViewModel.Factory),
     onClickToDetail: (Long) -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    settingsViewModel: SettingsViewModel
 ) {
 
     val articles by viewModel.articles.collectAsState()
@@ -49,7 +51,7 @@ fun ArticlesScreen(
     }
 
     Scaffold(
-        topBar = { EniShopTopBar(navController = navController) },
+        topBar = { EniShopTopBar(navController = navController, settingsViewModel = settingsViewModel) },
         floatingActionButton = { ArticlelistFAB(navController = navController) }
     ) {
         Column(modifier = Modifier.padding(it)) {

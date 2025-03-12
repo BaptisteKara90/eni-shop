@@ -36,6 +36,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.vm.ArticleDetailViewModel
+import fr.eni.ecole.eni_shop.vm.SettingsViewModel
 import fr.eni.ecole.enishop.ui.common.EniShopTopBar
 import fr.eni.ecole.enishop.utils.toFrenchStringFormat
 
@@ -46,7 +47,8 @@ fun ArticleDetailScreen(
     viewModel: ArticleDetailViewModel = viewModel(
         factory = ArticleDetailViewModel.Factory
     ),
-    navController: NavHostController
+    navController: NavHostController,
+    settingsViewModel: SettingsViewModel
 ) {
     val article by viewModel.article.collectAsState()
 
@@ -55,7 +57,7 @@ fun ArticleDetailScreen(
     }
 
     Scaffold(
-        topBar = { EniShopTopBar(navController = navController) }
+        topBar = { EniShopTopBar(navController = navController, settingsViewModel = settingsViewModel) }
     ) {
         Column(modifier = Modifier.padding(it)) {
             ArticleDetail(article = article)

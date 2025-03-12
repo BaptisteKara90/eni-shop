@@ -26,11 +26,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import fr.eni.ecole.eni_shop.vm.SettingsViewModel
 import fr.eni.ecole.enishop.ui.common.EniShopTextField
 import fr.eni.ecole.enishop.ui.common.EniShopTopBar
 
 @Composable
-fun ArticleFormScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun ArticleFormScreen(modifier: Modifier = Modifier, navController: NavHostController, settingsViewModel: SettingsViewModel) {
 
     var expanded by rememberSaveable {
         mutableStateOf(false)
@@ -51,7 +52,7 @@ fun ArticleFormScreen(modifier: Modifier = Modifier, navController: NavHostContr
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { EniShopTopBar(navController = navController) }
+        topBar = { EniShopTopBar(navController = navController, settingsViewModel = settingsViewModel) }
     ) {
         Column(
             modifier = Modifier
