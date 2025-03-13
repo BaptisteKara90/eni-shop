@@ -1,9 +1,13 @@
 package fr.eni.ecole.eni_shop.bo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.Date
 
+@Entity
 data class Article(
-    var id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L,
     var name: String = "",
     var description: String = "",
     var price: Double = 0.0,

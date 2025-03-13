@@ -2,9 +2,12 @@ package fr.eni.ecole.eni_shop.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
+import fr.eni.ecole.eni_shop.room.AppDataBase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -30,11 +33,11 @@ class ArticleListViewModel(private val articleRepository: ArticleRepository) : V
                 modelClass: Class<T>,
                 extras: CreationExtras
             ): T {
-//                val application = checkNotNull(extras[APPLICATION_KEY])
-//                val savedStateHandle = extras.createSavedStateHandle()
+                val application = checkNotNull(extras[APPLICATION_KEY])
+                val savedStateHandle = extras.createSavedStateHandle()
 
                 return ArticleListViewModel(
-                    ArticleRepository()
+                    ArticleRepository(AppDataBase.getInstance(application.applicationContext).articleDao())
                 ) as T
             }
         }

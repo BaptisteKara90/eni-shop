@@ -40,13 +40,19 @@ class ArticleDaoMemoryImpl : ArticleDao {
         return articles.first { it.id == id }
     }
 
-    override fun insert(article: Article): Article {
+    override fun insert(article: Article): Long {
         article.id = (articles.size + 1).toLong()
         articles.add(article)
-        return article
+        return article.id
     }
 
     override fun findAll(): List<Article> {
         return articles
     }
+
+    override fun deleteAll(article: Article) {
+        TODO("Not yet implemented")
+    }
+
+
 }

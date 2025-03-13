@@ -2,6 +2,7 @@ package fr.eni.ecole.enishop.ui.screen
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,14 +61,15 @@ fun ArticleDetailScreen(
         topBar = { EniShopTopBar(navController = navController, settingsViewModel = settingsViewModel) }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            ArticleDetail(article = article)
+            ArticleDetail(article = article, articleDetailViewModel = viewModel)
         }
     }
 }
 
 @Composable
-fun ArticleDetail(article: Article, modifier: Modifier = Modifier) {
+fun ArticleDetail(article: Article, modifier: Modifier = Modifier, articleDetailViewModel: ArticleDetailViewModel) {
 
+    val checkedFav by articleDetailViewModel.checkfav.collectAsState()
     val context = LocalContext.current
 
     Column(
@@ -115,7 +117,19 @@ fun ArticleDetail(article: Article, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Checkbox(checked = true, onCheckedChange = {})
+        Checkbox(
+            checked = checkedFav,
+            onCheckedChange = {
+                if(it){
+                    articleDetailViewModel.addArticle()
+                    Toast.makeText(context, "Article ajouté aux favoris", Toast.LENGTH_SHORT).show()
+                }else{
+                    articleDetailViewModel.deleteArticle()
+                    Toast.makeText(context, "Article supprimé des favoris", Toast.LENGTH_SHORT).show()
+                }
+                articleDetailViewModel.updateCheckBox()
+            }
+        )
         Text(text = "Favoris ?")
     }
 }
