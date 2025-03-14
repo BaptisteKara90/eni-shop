@@ -27,6 +27,7 @@ import fr.eni.ecole.eni_shop.vm.SettingsViewModel
 import fr.eni.ecole.enishop.ui.common.ArticleList
 import fr.eni.ecole.enishop.ui.common.CategoryFilterChip
 import fr.eni.ecole.enishop.ui.common.EniShopTopBar
+import fr.eni.ecole.enishop.ui.common.LoadingScreen
 
 
 @Composable
@@ -50,15 +51,26 @@ fun ArticlesScreen(
         articles
     }
 
+    val isLoading by viewModel.isLoading.collectAsState()
+
     Scaffold(
-        topBar = { EniShopTopBar(navController = navController, settingsViewModel = settingsViewModel) },
+        topBar = {
+            EniShopTopBar(
+                navController = navController,
+                settingsViewModel = settingsViewModel
+            )
+        },
         floatingActionButton = { ArticlelistFAB(navController = navController) }
     ) {
-        Column(modifier = Modifier.padding(it)) {
-            CategoryFilterChip(categories, selectedCategory = selectedCategory, onCategoryChange = {
-                selectedCategory = it
-            })
-            ArticleList(articles = selectedArticles, onClickToDetail = onClickToDetail)
+        if (isLoading) {
+            LoadingScreen()
+        }else{
+            Column(modifier = Modifier.padding(it)) {
+                CategoryFilterChip(categories, selectedCategory = selectedCategory, onCategoryChange = {
+                    selectedCategory = it
+                })
+                ArticleList(articles = selectedArticles, onClickToDetail = onClickToDetail)
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -54,12 +55,19 @@ import fr.eni.ecole.eni_shop.vm.SettingsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EniShopTopBar(modifier: Modifier = Modifier, navController: NavHostController, settingsViewModel: SettingsViewModel) {
+fun EniShopTopBar(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    settingsViewModel: SettingsViewModel
+) {
     TopAppBar(title = { EniShopTopBarTitle(settingsViewModel = settingsViewModel) },
         navigationIcon = {
             if (navController.previousBackStackEntry != null) {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back"
+                    )
                 }
             }
         }
@@ -100,7 +108,7 @@ fun EniShopTopBarTitle(modifier: Modifier = Modifier, settingsViewModel: Setting
             Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
         }
         if (isSwitchVisible.value) {
-            Box(){
+            Box() {
                 Switch(
                     checked = isDarkTheme,
                     onCheckedChange = { settingsViewModel.toggleDarkTheme() }
@@ -149,9 +157,11 @@ fun EniShopTextField(
 
 
 @Composable
-fun CategoryFilterChip( categories : List<String>, selectedCategory: String = "", onCategoryChange: (String) -> Unit = {}) {
-
-
+fun CategoryFilterChip(
+    categories: List<String>,
+    selectedCategory: String = "",
+    onCategoryChange: (String) -> Unit = {}
+) {
 
 
     LazyRow {
@@ -182,7 +192,7 @@ fun ArticleList(articles: List<Article>, onClickToDetail: (Long) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        items(articles){
+        items(articles) {
             ArticleItem(article = it, onClickToDetail = onClickToDetail)
         }
     }
@@ -192,7 +202,10 @@ fun ArticleList(articles: List<Article>, onClickToDetail: (Long) -> Unit) {
 @Composable
 fun ArticleItem(article: Article, modifier: Modifier = Modifier, onClickToDetail: (Long) -> Unit) {
     Card(modifier = Modifier.clickable { onClickToDetail(article.id) }) {
-        Column (modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             AsyncImage(
                 model = article.urlImage,
                 contentDescription = article.name,
@@ -207,3 +220,13 @@ fun ArticleItem(article: Article, modifier: Modifier = Modifier, onClickToDetail
     }
 }
 
+
+@Composable
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxWidth()
+    ) {
+        CircularProgressIndicator()
+    }
+}
